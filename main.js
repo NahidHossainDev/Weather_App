@@ -2,22 +2,19 @@ const api = {
     key: "dbe178a3d1ca1d90deb6531ccdf57b7b",
     base: "https://api.openweathermap.org/data/2.5/"
 }
-
 const searchBox = document.querySelector('.search-box');
 searchBox.addEventListener("keypress", setQuery);
 
-const searchIcon = document.querySelector('.search-icon');
-searchIcon.addEventListener("click", setQuery);
-
 function setQuery(event) {
     if (event.keyCode == 13) {
-        console.log(searchBox.value);
         getResults(searchBox.value);
     }
 }
 
+function forClick() {
+    getResults(searchBox.value);
+}
 function getResults(query) {
-    console.log(query);
     fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
@@ -33,6 +30,9 @@ function displayResults(weather) {
     let date = document.querySelector('.location .date');
     date.innerText = dateBuilder(now);
 
+    // let icon = document.querySelector('#icon');
+    // icon.innerHTML = `<img src="icons/${weather.iconId}.png"/>`;
+
     let temp = document.querySelector('.current .temp');
     temp.innerHTML = `${Math.round(weather.main.temp)}<span>&#176;c</span>`
 
@@ -40,7 +40,7 @@ function displayResults(weather) {
     weather_el.innerText = weather.weather[0].main;
 
     let highLow = document.querySelector('.high-low');
-    highLow.innerText = `${weather.main.temp_min}°c / ${weather.main.temp_max}°c`
+    highLow.innerText = `Min temp.- ${weather.main.temp_min}°c / Max temp.- ${weather.main.temp_max}°c`
 }
 function dateBuilder(d) {
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
