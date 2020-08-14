@@ -2,8 +2,6 @@ const api = {
     key: "dbe178a3d1ca1d90deb6531ccdf57b7b",
     base: "https://api.openweathermap.org/data/2.5/"
 }
-
-
 const searchBox = document.querySelector('.search-box');
 searchBox.addEventListener("keypress", setQuery);
 
@@ -16,9 +14,7 @@ function setQuery(event) {
 function forClick() {
     getResults(searchBox.value);
 }
-
 function getResults(query) {
-    console.log(query);
     fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
@@ -33,6 +29,9 @@ function displayResults(weather) {
     let now = new Date();
     let date = document.querySelector('.location .date');
     date.innerText = dateBuilder(now);
+
+    // let icon = document.querySelector('#icon');
+    // icon.innerHTML = `<img src="icons/${weather.iconId}.png"/>`;
 
     let temp = document.querySelector('.current .temp');
     temp.innerHTML = `${Math.round(weather.main.temp)}<span>&#176;c</span>`
