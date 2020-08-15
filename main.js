@@ -3,26 +3,25 @@ const api = {
     base: "https://api.openweathermap.org/data/2.5/"
 }
 // check if browser support geolocation:
-// if ('geolocation' in navigator) {
-//     navigator.geolocation.getCurrentPosition(setPosition, showError);
-// } else {
-//     alert("your Browser doesn't support Geolocation");
-// }
+if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(setPosition);
+} else {
+    alert("your Browser doesn't support Geolocation");
+}
 // Set users position:
-// function setPosition(position){
-//     let latitude = position.coords.latitude;
-//     let longitude = position.coords.longitude;
-//     getWeather(latitude, longitude);
-// }
+function setPosition(position) {
+    console.log(position);
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    getWeather(latitude, longitude);
+}
 // get weather by location:
-// function getWeather(latitude, longitude) {
-//     fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&APPID=${api.key}`)
-//         .then(weather => {
-//             return weather.json();
-//         }).then(displayResults);
-// }
-
-
+function getWeather(latitude, longitude) {
+    fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`)
+        .then(weather => {
+            return weather.json();
+        }).then(displayResults);
+}
 
 const searchBox = document.querySelector('.search-box');
 searchBox.addEventListener("keypress", setQuery);
@@ -55,8 +54,9 @@ function displayResults(weather) {
     let date = document.querySelector('.location .date');
     date.innerText = dateBuilder(now);
 
-    // let icon = document.querySelector('#icon');
-    // icon.innerHTML = `<img src="icons/${weather.iconId}.png"/>`;
+    let icon = document.querySelector('.icon');
+    console.log(weather.weather[0].icon)
+    icon.innerHTML = `<img src="img/png/128x128/${weather.weather[0].icon}.png"/>`;
 
     let temp = document.querySelector('.current .temp');
     temp.innerHTML = `${Math.round(weather.main.temp)}<span>&#176;c</span>`
