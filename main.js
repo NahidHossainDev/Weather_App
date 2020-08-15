@@ -2,6 +2,28 @@ const api = {
     key: "dbe178a3d1ca1d90deb6531ccdf57b7b",
     base: "https://api.openweathermap.org/data/2.5/"
 }
+// check if browser support geolocation:
+// if ('geolocation' in navigator) {
+//     navigator.geolocation.getCurrentPosition(setPosition, showError);
+// } else {
+//     alert("your Browser doesn't support Geolocation");
+// }
+// Set users position:
+// function setPosition(position){
+//     let latitude = position.coords.latitude;
+//     let longitude = position.coords.longitude;
+//     getWeather(latitude, longitude);
+// }
+// get weather by location:
+// function getWeather(latitude, longitude) {
+//     fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&APPID=${api.key}`)
+//         .then(weather => {
+//             return weather.json();
+//         }).then(displayResults);
+// }
+
+
+
 const searchBox = document.querySelector('.search-box');
 searchBox.addEventListener("keypress", setQuery);
 
@@ -10,6 +32,9 @@ function setQuery(event) {
         getResults(searchBox.value);
     }
 }
+
+const touchZone = document.getElementById("search");
+touchZone.addEventListener("touchstart", forClick);
 
 function forClick() {
     getResults(searchBox.value);
